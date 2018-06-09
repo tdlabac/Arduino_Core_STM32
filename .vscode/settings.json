@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "usbd_ctlreq.h": "c",
+        "usbd_core.h": "c",
+        "usb_device.h": "c",
+        "usbd_desc.h": "c",
+        "usbd_cdc.h": "c",
+        "usb_interface.h": "c"
+    }
+}

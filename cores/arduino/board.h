@@ -20,6 +20,7 @@ extern "C"{
 #include "timer.h"
 #include "twi.h"
 #include "uart.h"
+#include "uart_emul.h"
 
 void init( void ) ;
 #ifdef __cplusplus

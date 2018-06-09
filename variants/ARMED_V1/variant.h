@@ -33,110 +33,128 @@ extern "C"{
  *----------------------------------------------------------------------------*/
 extern const PinName digitalPin[];
 
-#define PA0   0  //D0
-#define PA1   1  //D1
-#define PA2   2  //D2
-#define PA3   3  //D3
-#define PA4   4  //D4
-#define PA5   5  //D5
-#define PA6   6  //D6
-#define PA7   7  //D7
-#define PA8   8  //D8
-#define PA9   9  //D9
-#define PA10  10 //D10
-#define PA11  11 //D11
-#define PA12  12 //D12
-#define PA13  13 //D13
-#define PA14  14 //D14
-#define PA15  15 //D15
-#define PB0   16 //D16
-#define PB1   17 //D17
-#define PB2   18 //D18
-#define PB3   19 //D19
-#define PB4   20 //D20
-#define PB5   21 //D21
-#define PB6   22 //D22
-#define PB7   23 //D23
-#define PB8   24 //D24
-#define PB9   25 //D25
-#define PB10  26 //D26
-#define PB11  27 //D27
-#define PB12  28 //D28
-#define PB13  29 //D29
-#define PB14  30 //D30
-#define PB15  31 //D31
-#define PC0   32 //D32/A0
-#define PC1   33 //D33/A1
-#define PC2   34 //D34/A2
-#define PC3   35 //D35
-#define PC4   36 //D36
-#define PC5   37 //D37
-#define PC6   38 //D38
-#define PC7   39 //D39
-#define PC8   40 //D40
-#define PC9   41 //D41
-#define PC10  42 //D42
-#define PC11  43 //D43
-#define PC12  44 //D44
-#define PC13  45 //D45
-#define PC14  46 //D46
-#define PC15  47 //D47
-#define PD0   48 //D48
-#define PD1   49 //D49
-#define PD2   50 //D50
-#define PD3   51 //D51
-#define PD4   52 //D52
-#define PD5   53 //D53
-#define PD6   54 //D54
-#define PD7   55 //D55
-#define PD8   56 //D56
-#define PD9   57 //D57
-#define PD10  58 //D58
-#define PD11  59 //D59
-#define PD12  60 //D60
-#define PD13  61 //D61
-#define PD14  62 //D62
-#define PD15  63 //D63
-#define PE0   64 //D64
-#define PE1   65 //D65
-#define PE2   66 //D66
-#define PE3   67 //D67
-#define PE4   68 //D68
-#define PE5   69 //D69
-#define PE6   70 //D70
-#define PE7   71 //D71
-#define PE8   72 //D72
-#define PE9   73 //D73
-#define PE10  74 //D74
-#define PE11  75 //D75
-#define PE12  76 //D76
-#define PE13  77 //D77
-#define PE14  78 //D78
-#define PE15  79 //D79
+enum {
+//P1 connector Right side
+  PA12,
+  PC0,  //D0
+  PC2,  //D1
+  PA0,  //D2
+  PA2,  //D3
+  PA4,  //D4
+  PA6,  //D5
+  PC4,  //D6
+  PB0,  //D7
+  PB2,  //D8
+  PE8,  //D9
+  PE10, //D10
+  PE12, //D11
+  PE14, //D12
+  PB10, //D13
+  PB12, //D14
+  PB14, //D15
+  PD8,  //D16
+  PD10, //D17
+  PD12, //D18
+  PD14, //D19
+//P2 connector Left side
+  PH0,  //D20
+  PC14, //D21
+  PE6,  //D22
+  PE4,  //D23
+  PE2,  //D24
+  PE0,  //D25
+  PB8,  //D26
+  PB6,  //D27
+  PB4,  //D28
+  PD7,  //D29
+  PD5,  //D30
+  PD3,  //D31
+  PD1,  //D32
+  PC12, //D33
+  PC10, //D34
+  PA10, //D35
+  PA8,  //D36
+  PC8,  //D37
+  PC6,  //D38
+//P1 Connector Left Side
+  PC1,  //D39
+  PC3,  //D40
+  PA1,  //D41
+  PA3,  //D42
+  PA5,  //D43
+  PA7,  //D44
+  PC5,  //D45
+  PB1,  //D46
+  PE7,  //D47
+  PE9,  //D48
+  PE11, //D49
+  PE13, //D50
+  PE15, //D51
+  PB11, //D52
+  PB13, //D53
+  PB15, //D54
+  PD9,  //D55
+  PD11, //D56
+  PD13, //D57
+  PD15, //D58
+//P2 connector Right side
+  PH1,  //D59
+  PC15, //D60
+  PC13, //D61
+  PE5,  //D62
+  PE3,  //D63
+  PE1,  //D64
+  PB9,  //D65
+  PB7,  //D66
+  PB5,  //D67
+  PB3,  //D68
+  PD6,  //D69
+  PD4,  //D70
+  PD2,  //D71
+  PD0,  //D72
+  PC11, //D73
+  PA15, //D74
+  PA13, //D75
+  PA9,  //D76
+  PC9,  //D77
+  PC7,  //D78
+//Duplicated to have A0-A5 as F407 do not have Uno like connector
+// and to be aligned with PinMap_ADC
+  PC2_2,//D79/A0 = D1
+  PC4_2,//D80/A1 = D6
+  PB0_2,//D81/A2 = D7
+  PC1_2,//D82/A3 = D39
+  PC3_2,//D83/A4 = D40
+  PA1_2,//D84/A5 = D41
+  PC5_2,//D85/A6 = D45
+  PB1_2,//D86/A7 = D46
+  PEND
+};
 
 // This must be a literal with the same value as PEND
-#define NUM_DIGITAL_PINS        83
+#define NUM_DIGITAL_PINS        88
 // This must be a literal with a value less than or equal to to MAX_ANALOG_INPUTS
-#define NUM_ANALOG_INPUTS       3
-#define NUM_ANALOG_FIRST        32
-
-// PWM resolution
-#define PWM_RESOLUTION          8
-#define PWM_FREQUENCY           20000 // >= 20 Khz => inaudible noise for fans
-#define PWM_MAX_DUTY_CYCLE      255
+#define NUM_ANALOG_INPUTS       8
+#define NUM_ANALOG_FIRST        80
 
 // On-board LED pin number
-#define LED_BUILTIN             PB7
-#define LED_HEARTBEAT           LED_BUILTIN
+#define LED_BUILTIN             PD12
+#define LED_GREEN               LED_BUILTIN
+#define LED_BLUE                PD15
+#define LED_RED                 PD14
+#define LED_ORANGE              PD13
+
+// On-board user button
+#define USER_BTN                2
 
 // SPI Definitions
-#define PIN_SPI_SS              PE7
+#define PIN_SPI_SS2             14
 #define PIN_SPI_MOSI            PA7
-#define PIN_SPI_MISO            PA6
+#define PIN_SPI_MISO            5
 #define PIN_SPI_SCK             PA5
 
 // I2C Definitions
-#define PIN_WIRE_SDA            PB9
+#define PIN_WIRE_SDA            PB7
 #define PIN_WIRE_SCL            PB8
 
 // Timer Definitions
@@ -145,12 +163,12 @@ extern const PinName digitalPin[];
 #define TIMER_SERVO             TIM7
 
 // UART Definitions
-#define SERIAL_UART_INSTANCE    4 // Connected to SER1 header
+#define SERIAL_UART_INSTANCE    2 //Connected to ST-Link
 
 // Default pin used for 'Serial' instance (ex: ST-Link)
 // Mandatory for Firmata
-#define PIN_SERIAL_RX           PC11
-#define PIN_SERIAL_TX           PC10
+#define PIN_SERIAL_RX           PA3
+#define PIN_SERIAL_TX           PA2
 
 #ifdef __cplusplus
 } // extern "C"
@@ -175,7 +193,8 @@ extern const PinName digitalPin[];
 //
 // SERIAL_PORT_HARDWARE_OPEN  Hardware serial ports which are open for use.  Their RX & TX
 //                            pins are NOT connected to anything by default.
-#define SERIAL_PORT_MONITOR     Serial
+#define SERIAL_PORT_MONITOR     Serial // Require connections for ST-LINK VCP on U2 pin 12 and 13.
+                                   // See UM �6.1.3 ST-LINK/V2-A VCP configuration)
 #define SERIAL_PORT_HARDWARE_OPEN  Serial
 #endif
 
