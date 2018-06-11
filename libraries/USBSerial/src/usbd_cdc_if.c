@@ -99,7 +99,6 @@ __IO uint32_t UserRxBufPtrOut = 0; /* Increment this pointer or roll it back to
 __IO uint32_t SLP;
 __IO uint32_t GetRxCount;
 __IO uint32_t lineState = 0;
-uint8_t cptlineState = 0;
 volatile uint32_t USB_received = 0;
 uint8_t USBBuffer[64];
 uint8_t USBPackSize;
@@ -238,9 +237,7 @@ static int8_t CDC_Control_FS  (uint8_t cmd, uint8_t* pbuf, uint16_t length)
     break;
 
   case CDC_SET_CONTROL_LINE_STATE:
-    cptlineState++;
-    if(cptlineState == 2)
-    lineState = 1;
+    lineState = (((USBD_SetupReqTypedef *)pbuf)->wValue & 0x01) != 0; // Check DTR state
     break;
 
   case CDC_SEND_BREAK:
@@ -314,28 +311,22 @@ void CDC_flush(void)
       memcpy((uint8_t*)&StackTxBufferFS[APP_TX_DATA_SIZE - UserTxBufPtrOut], (uint8_t*)&UserTxBufferFS[0], UserTxBufPtrIn);
 
       USBD_CDC_SetTxBuffer(&hUSBD_Device_CDC, (uint8_t*)&StackTxBufferFS[0], (APP_TX_DATA_SIZE - UserTxBufPtrOut + UserTxBufPtrIn));
-
-      do {
-        status = USBD_CDC_TransmitPacket(&hUSBD_Device_CDC);
-      } while(status == USBD_BUSY);
-
-      if(status == USBD_OK)
-      {
-        UserTxBufPtrOut = UserTxBufPtrIn;
-      }
     }
-    else
+    else 
     {
       USBD_CDC_SetTxBuffer(&hUSBD_Device_CDC, (uint8_t*)&UserTxBufferFS[UserTxBufPtrOut], (UserTxBufPtrIn - UserTxBufPtrOut));
+    }
 
-	  do {
+    do {
+      if (lineState == 0) // Device disconnected
+        status = USBD_OK;
+      else
         status = USBD_CDC_TransmitPacket(&hUSBD_Device_CDC);
-      } while(status == USBD_BUSY);
+    } while(status == USBD_BUSY);
 
-      if(status == USBD_OK)
-      {
-        UserTxBufPtrOut = UserTxBufPtrIn;
-      }
+    if(status == USBD_OK)
+    {
+      UserTxBufPtrOut = UserTxBufPtrIn;
     }
   }
 }
@@ -396,25 +387,21 @@ void TIM6_PeriodElapsedCallback(stimer_t *htim)
       memcpy((uint8_t*)&StackTxBufferFS[APP_TX_DATA_SIZE - UserTxBufPtrOut], (uint8_t*)&UserTxBufferFS[0], UserTxBufPtrIn);
 
       USBD_CDC_SetTxBuffer(&hUSBD_Device_CDC, (uint8_t*)&StackTxBufferFS[0], (APP_TX_DATA_SIZE - UserTxBufPtrOut + UserTxBufPtrIn));
-
-      do {
-	    status = USBD_CDC_TransmitPacket(&hUSBD_Device_CDC);
-      } while(status == USBD_BUSY);
-
-      if(status == USBD_OK) {
-        UserTxBufPtrOut = UserTxBufPtrIn;
-      }
     }
-    else {
+    else 
+    {
       USBD_CDC_SetTxBuffer(&hUSBD_Device_CDC, (uint8_t*)&UserTxBufferFS[UserTxBufPtrOut], (UserTxBufPtrIn - UserTxBufPtrOut));
+    }
 
-      do {
-        status = USBD_CDC_TransmitPacket(&hUSBD_Device_CDC);
-      } while(status == USBD_BUSY);
+    do {        
+        if (lineState == 0) // Device disconnected
+          status = USBD_OK;
+        else      
+	        status = USBD_CDC_TransmitPacket(&hUSBD_Device_CDC);
+    } while(status == USBD_BUSY);
 
-      if(status == USBD_OK) {
-        UserTxBufPtrOut = UserTxBufPtrIn;
-      }
+    if(status == USBD_OK) {
+      UserTxBufPtrOut = UserTxBufPtrIn;
     }
   }
 }
