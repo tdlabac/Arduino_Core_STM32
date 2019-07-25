@@ -3,3 +3,4 @@
 .DS_Store
 boards.local.txt
 platform.local.txt
+CMSIS/
